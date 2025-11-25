@@ -8,7 +8,7 @@ import requests
 from typing import List, Dict, Optional
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-import threading # اضافه شد برای اجرای همزمان
+import threading 
 
 TOKEN = os.getenv("BOT_TOKEN", "8477116669:AAGmj-43ABL69_zxLLqetulr2T_rKxBii4A")
 GROUP_LINK = os.getenv("GROUP_LINK", "https://t.me/GODSHAKI")
@@ -241,10 +241,7 @@ def format_v2ray_list(configs: List[str], limit: int = V2RAY_SHOW_LIMIT) -> str:
     
     full_content = head + "\n".join(body_lines)
     
-    # متن بازگشت
     return_text = "\n\nبرای بازگشت از دکمه «بازگشت» پایین استفاده کن."
-    
-    # نکته درخواستی (نقل قول شده)
     note_text = (
         "\n\n*نکته*: کل متن داخل بلوک بالا (شامل شماره‌ها و کانفیگ‌ها) با یک کلیک کپی می‌شود. "
         "لطفاً بعد از کپی، شماره‌ها را در صورت نیاز حذف کنید."
@@ -357,12 +354,10 @@ def fallback(message):
 def run_bot():
     logger.info("Bot starting polling...")
     try:
+        # استفاده از infinity_polling در یک ترد جداگانه
         bot.infinity_polling(skip_pending=True, timeout=20, long_polling_timeout=25)
-    except KeyboardInterrupt:
-        logger.info("Bot stopped by user (KeyboardInterrupt)")
     except Exception as e:
-        logger.exception(f"Polling error: {e}")
-        time.sleep(2)
+        logger.exception(f"Polling error occurred: {e}")
 
 from flask import Flask
 app = Flask(__name__)
@@ -374,16 +369,14 @@ def hello():
 def main():
     logger.info("Starting application threads...")
     
-    # اجرای ربات در یک ترد جداگانه
+    # اجرای ربات در یک ترد جداگانه و دائمی (Daemon)
     bot_thread = threading.Thread(target=run_bot, daemon=True)
     bot_thread.start()
     logger.info("Telegram Bot thread started.")
     
-    # اجرا ترد اصلی برای سرویس‌دهی به Render
+    # اجرای وب سرور در ترد اصلی (مورد نیاز Render)
     port = int(os.environ.get('PORT', 5000))
     app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     main()
-```  main()
-
