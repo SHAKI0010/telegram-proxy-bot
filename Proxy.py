@@ -8,7 +8,7 @@ import requests
 from typing import List, Dict, Optional
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-import threading # برای اجرای همزمان Flask و Bot در Render
+import threading # اضافه شد برای اجرای همزمان
 
 TOKEN = os.getenv("BOT_TOKEN", "8477116669:AAGmj-43ABL69_zxLLqetulr2T_rKxBii4A")
 GROUP_LINK = os.getenv("GROUP_LINK", "https://t.me/GODSHAKI")
@@ -374,12 +374,13 @@ def hello():
 def main():
     logger.info("Starting application threads...")
     
-    # اجرای ربات در یک ترد جداگانه (daemon=True باعث می‌شود با بسته شدن ترد اصلی، این ترد هم بسته شود)
+    # اجرای ربات در یک ترد جداگانه
     bot_thread = threading.Thread(target=run_bot, daemon=True)
     bot_thread.start()
     logger.info("Telegram Bot thread started.")
     
-    # اجرای وب سرور در ترد اصلی برای سرویس‌دهی به Ren = int(os.environ.get('PORT', 5000))
+    # اجرا ترد اصلی برای سرویس‌دهی به Render
+    port = int(os.environ.get('PORT', 5000))
     app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
