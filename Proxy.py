@@ -1,10 +1,3 @@
-متوجه شدم. خطای `SyntaxError: invalid syntax` در خطی که حاوی ````flask()` است، نشان می‌دهد که کدهای نهاییِ مربوط به اجرای Flask در انتهای فایل به درستی نوشته نشده‌اند و علامت بک‌تیک (`) سه تایی (```) به عنوان بخشی از سینتکس پایتون تلقی شده است.
-
-من ساختار اجرای همزمان (Concurrency) در بخش `main` را اصلاح کردم تا از کتابخانه `threading` به درستی برای اجرای همزمان Bot و Flask استفاده شود، و ساختار پایانی را از فرمت Markdown به کد پایتون خالص برگرداندم.
-
-**این کد نهایی و کاملاً تصحیح شده است و باید بدون خطای سینتکسی اجرا شود:**
-
-```python
 import os
 import time
 import json
@@ -386,11 +379,9 @@ def main():
     bot_thread.start()
     logger.info("Telegram Bot thread started.")
     
-    # اجرا ترد اصلی برای سرویس‌دهی به Render
+    # اجرای وب سرور در ترد اصلی برای سرویس‌دهی به Render
     port = int(os.environ.get('PORT', 5000))
     app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     main()
-```  main()
-```
