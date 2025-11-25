@@ -354,10 +354,6 @@ def main():
         time.sleep(2)
 # ======== Flask + Bot Runner for Render ========
 
-import threading
-from flask import Flask
-import os
-
 app = Flask(__name__)
 
 @app.route('/')
